@@ -11,6 +11,7 @@ sys.setdefaultencoding('UTF-8')
 
 hot_keys = [u'职位描述', u'职位标签', u'福利待遇', u'上班地址']
 filter_line = [u"", u"显示全部", u'查看地图', u"交通路线", u"附近环境", u"举报职位"]
+end_flag = [u'查看地图', u"交通路线", u"附近环境", u"举报职位", u"相关职位", u"热门职位", u"热门城市", u"热门职位热门城市"]
 
 kv_rel = {u'职位描述': 'position_des', u'职位标签': 'position_tag',
           u'福利待遇': 'benefits', u'上班地址': 'work_address'}
@@ -48,8 +49,11 @@ def extract_data(row_data):
     with open('o.txt', 'w') as f:
         for value in data_set:
             data = value.strip()
+            if data in end_flag:
+                    break
             if data not in filter_line:
                 res_data.append(data)
+
                 #f.write(data.encode('utf-8')+'\n')
 
     # 取前三个正常的
@@ -128,14 +132,14 @@ def parse_jobinfo(data):
         return None
 
 if __name__ == "__main__":
-    book = xlrd.open_workbook('1.xlsx')
+    book = xlrd.open_workbook('job_4.xlsx')
     table = book.sheet_by_index(0)
-    row = table.row_values(28)
-    parse_jobinfo(row)
-    # res_dict = extract_data(row)
+    row = table.row_values(4)
+    # parse_jobinfo(row)
+    res_dict = extract_data(row)
     #
-    # for k, v in res_dict.iteritems():
-    #     print k, ':', v
+    for k, v in res_dict.iteritems():
+        print k, ':', v
     #
     # insert_db(res_dict)
 
