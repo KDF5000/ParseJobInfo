@@ -41,7 +41,7 @@ def take_first(tp):
 #从excel一行数据提取需要的数据
 def extract_data(row_data):
     data_dict = dict()
-    all_info = row_data[8]
+    all_info = row_data[12]  #所有描述所在列
     data_dict['source_url'] = row_data[0]
     data = all_info.strip()
     data_set = data.split('\n')
@@ -53,8 +53,7 @@ def extract_data(row_data):
                     break
             if data not in filter_line:
                 res_data.append(data)
-
-                #f.write(data.encode('utf-8')+'\n')
+                f.write(data.encode('utf-8')+'\n')
 
     # 取前三个正常的
     data_dict['position'] = res_data[0]  # 招聘职位
@@ -132,9 +131,9 @@ def parse_jobinfo(data):
         return None
 
 if __name__ == "__main__":
-    book = xlrd.open_workbook('job_4.xlsx')
+    book = xlrd.open_workbook('job_1.xls')
     table = book.sheet_by_index(0)
-    row = table.row_values(4)
+    row = table.row_values(15)
     # parse_jobinfo(row)
     res_dict = extract_data(row)
     #
